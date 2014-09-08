@@ -11,4 +11,5 @@
 
 			<p class="navbar-text navbar-right">Hola <strong><?php echo $this->session->userdata('username');?></strong> // <a href="<?php echo base_url().'login/logout_ci';?>" class="navbar-link">Cerrar sesión</a></p>
 	</div>
+	<p>Esto es una prueba para github</p>
 </div>
