@@ -17,21 +17,19 @@ class Entidades extends CI_Controller {
 		$this->load->view('layout',$data);
 	}
 
-	public function getEntidades($value=NULL)
+	public function getEntidad()
 	{
-		if (is_null($value)) {
-			if(!is_null(($this->input->post('cif')))) {
-				echo "Punto 1";
-				$result = $this->Entidad_Model->getEntidad($this->input->post('cif'));
-			} else {
-				echo "Punto 2";
-				$result = $this->Entidad_Model->getEntidades();	
-			}
-		} else {
-			echo "Punto 3";
-			$result = $this->Entidad_Model->getEntidad($value);
-		}
-		return $result;
+		
+		$cif = $this->input->post('cif');
+		
+		$result = $this->Entidad_Model->getEntidad($cif);
+		echo json_encode($result);
+	}
+
+	public function getEntidades()
+	{
+		$result = $this->Entidad_Model->getEntidades();
+		echo json_encode($result);
 		//echo $result;
 	}
 

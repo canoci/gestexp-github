@@ -45,9 +45,6 @@
   </div>
 
 
-
-
-
   <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
       <button type="submit" class="btn btn-default">Enviar</button>
@@ -55,63 +52,42 @@
   </div>
 </form>
 
-  <div class="wrapper">
-      <input type="text" id="framework" />
-  </div>
-
   <!-- Botón de prueba para el jquery -->
-  <button type="button" class="btn btn-default" id="boton">Consulta CIF</button>
-  <div class="div381">aaaa</div>
   <a href="<?php echo site_url(); ?>">Volver a la lista</a>.
 
 
 <!-- Script para cargar el nombre de la entidad, habiendo escrito el CIF -->
- 
-  <script type="text/javascript">
- /* $('document').ready(function()
-  {
-      $('#boton').click(function(){
-          if($('#CIF').val()==""){
-            alert("Introduce el CIF");
-            return false;
-            }
-          else{
-            var CIF = $('#CIF').val();
-        }
-
-
-          $.getJSON( "http://localhost:8080/gestexp/entidades/getEntidades", { cif: CIF }, function(json){
-            console.dir(json);
-          });
-        });
-  });*/
-
-
-  $(document).ready( function() {
-    $('#boton').click(function() {
-        if($('#CIF').val()==""){
-          alert("Introduce el CIF");
-          return false;
-        } else {
-            var CIF = $('#CIF').val();
-          }
-        $.ajax({
-            type: 'POST',
-            url: '../entidades/getEntidades',
-            data: 'cif:CIF',
-            dataType: 'json',
-            cache: false,
-            success:function(retrieved_data){
-            // Your code here.. use something like this
-            var Obj = JSON.parse(retrieved_data)
-
-            // Since your controller produce array of object you can access the value by using this one :
-            for(var a=0; a< Obj.length; a++){
-              console.log("the value with id : " + Obj.nombre + "is " + Obj.estado);
-                $('#entidad').html(Obj.nombre);
-              }
-            },
-        });
+    
+<script>
+  $(document).ready(function() {
+    $("#CIF").keyup(function(){
+      var cif_input = $(this).val();
+      console.log('el valor de id es ' + cif_input);
+      $.ajax({
+        url: 'getEntidad',
+        type: 'POST',
+        dataType: 'json',
+        data: {cif: cif_input},
+      })
+      .done(function(data) {
+        console.dir(data);
+        $('#entidad').val(data[0].nombre);
+        console.log("success");
+      })
+      .fail(function(data) {
+        $('#entidad').val("");
+        console.log("error");
+      })
+      .always(function(data) {
+        console.log("complete");
+      });
     });
-});
+  $("#button").submit(function(event) {
+    event.preventDefault();
+    if ($('#entidad').val() == "") {
+        alert("No existe la entidad, pulse el botón para crear nuevo");
+      }
+    });
+
+  });
 </script>
