@@ -71,7 +71,14 @@
       })
       .done(function(data) {
         console.dir(data);
-        $('#entidad').val(data[0].nombre);
+        console.log('La longitud de data es: ' + data.length);
+        if (data.length == 1) 
+          {
+            $('#entidad').val(data[0].nombre);    
+          } else {
+            $('#entidad').val("");
+          };
+        
         console.log("success");
       })
       .fail(function(data) {
