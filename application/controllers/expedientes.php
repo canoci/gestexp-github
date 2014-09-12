@@ -255,9 +255,9 @@ function busqueda_expediente(){
     }
     
     public function contar_docs($id_exp){
-    $this->load->model('Exp_Doc_Model');
-    $relacion_docs = $this->Exp_Doc_Model->getExpedienteDocumentos($id_exp);
-    return count($relacion_docs);
+        $this->load->model('Exp_Doc_Model');
+        $relacion_docs = $this->Exp_Doc_Model->getExpedienteDocumentos($id_exp);
+        return count($relacion_docs);
     }
     
     public function autocomplete(){
@@ -265,32 +265,28 @@ function busqueda_expediente(){
     $entidades = $this->Entidad_Model->getEntidades();
     $results = array();
 
-    foreach ($entidades as $row) {
-        $a = array(
-            'id' => $row->id_ent,
-            'label' => $row->nombre,
-            'value' => $row->nombre
-            );
-        $results[] = $a;
-    }
+        foreach ($entidades as $row) {
+            $a = array(
+                'id' => $row->id_ent,
+                'label' => $row->nombre,
+                'value' => $row->nombre
+                );
+            $results[] = $a;
+        }
     var_dump($results);
     echo json_encode($results);
     }
 
-function get_data(){ 
-    $this->load->model('Entidad_Model');
-
-    $match = $this->input->get('term', TRUE);  // TRUE para hacer un filtrado XSS  
-    $item = $this->input->get('item', TRUE); 
-
-    var_dump($match);
-    var_dump($item);
-    
-    $data['item'] = $item;
-    $data['results'] = $this->Entidad_Model->get_data($item,$match);
+    public function getEntidad()
+    {
+        $this->load->model('Entidad_Model');   
+        $cif = $this->input->post('cif');
         
-    $this->load->view('data',$data);    
-}
-
+        $result = $this->Entidad_Model->getEntidad($cif);
+        echo json_encode($result);
+    }
 }
 ?>
+
+
+
